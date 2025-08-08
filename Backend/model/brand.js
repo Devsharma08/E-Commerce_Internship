@@ -1,0 +1,12 @@
+const mongoose = require('mongoose');
+
+const BrandSchema = mongoose.Schema({
+  name:{
+    type:String,
+    required:[true,'Enter Brand name'],
+  }
+})
+
+
+
+module.exports = mongoose.model('Brand',BrandSchema);

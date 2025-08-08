@@ -1,0 +1,78 @@
+<!-- Section: New Products -->
+ <div class="my-2">
+  
+<app-embla [items]="productImage"
+  [options]="{ loop: true }"
+  [autoplay]="true"
+  [interval]="3000">
+  <ng-template let-product>
+
+    <div class="relative w-full h-[26rem] overflow-hidden rounded-xl shadow-md">
+      <!-- Product Image -->
+      <img
+        [src]="product?.images?.[0] || 'assets/images/placeholder.jpg'"
+        [routerLink]="['/product', product._id]"
+        class="w-full h-full object-contain">
+        <app-embla [items]="productImage"
+  [options]="{ loop: true }"
+  [autoplay]="true"
+  [interval]="3000">
+  <ng-template let-product>
+
+    <div class="relative w-full h-[26rem] overflow-hidden rounded-xl shadow-md">
+      <!-- Product Image -->
+      <img
+        [src]="product?.images?.[0] || 'assets/images/placeholder.jpg'"
+        class="w-full h-full object-contain"
+        alt="product image"
+      />
+
+      <!-- Product Name Overlay -->
+      <div
+        class="absolute bottom-0 left-0 w-full bg-black/40 backdrop-blur-sm text-white text-center text-sm py-5 text-lg "
+      >
+        {{ product.name }}
+      </div>
+    </div>
+  </ng-template>
+</app-embla>
+        alt="product image"
+      />
+
+      <!-- Product Name Overlay -->
+      <div
+        class="absolute bottom-0 left-0 w-full bg-black/40 backdrop-blur-sm text-white text-center text-sm py-5 text-lg "
+      >
+        {{ product.name }}
+      </div>
+    </div>
+  </ng-template>
+</app-embla>
+
+
+
+ 
+<div class="w-full px-6 py-8 bg-gray-50">
+  <h1 class="text-2xl font-bold font-mono mb-6 text-gray-800 border-b border-gray-300 pb-2">
+    New Arrivals
+  </h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" >
+    
+    <app-card (cartChanged)="handleCartChange()" *ngFor="let product of newProductList" [product]="product"></app-card>
+  </div>
+</div>
+
+<!-- Section: Featured Products -->
+<div class="w-full px-6 py-8 bg-gray-50">
+  <h1 class="text-2xl font-bold font-mono mb-6 text-gray-800 border-b border-gray-300 pb-2">
+    Featured Products
+  </h1>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    
+     
+    <app-card *ngFor="let product of featuredProductList" [product]="product"></app-card>
+  </div>
+</div>
+</div>

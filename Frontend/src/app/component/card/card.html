@@ -1,0 +1,79 @@
+<mat-card
+  class="w-72 h-[420px] shadow-lg rounded-2xl relative hover:shadow-xl transition duration-300 flex flex-col overflow-hidden"
+  [routerLink]="['/product', product._id]"
+>
+  <!-- Product Image -->
+  <img
+    *ngIf="product.images?.length"
+    [src]="product.images[0]"
+    alt="{{ product.name }}"
+    class="rounded-t-2xl h-60 w-full object-contain bg-white p-2"
+  />
+
+  <!-- Card Content -->
+  <mat-card-content class="flex flex-col flex-1 p-4 justify-between">
+    <!-- Product Info -->
+    <div>
+      <h2
+        class="text-base font-semibold text-gray-800 mb-2 truncate"
+        title="{{ product.name }}"
+      >
+        {{ product.name }}
+      </h2>
+
+      <p
+        class="text-sm text-gray-600 mb-3 overflow-hidden"
+        style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;"
+        title="{{ product.shortDescription }}"
+      >
+        {{ product.shortDescription }}
+      </p>
+
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-blue-600 font-bold text-lg">
+          ₹{{ product.price }}
+        </span>
+        <span class="text-sm text-gray-400 line-through">
+          ₹{{ +product.price + +product.discount }}
+        </span>
+        <span class="text-green-600 text-sm">-₹{{ product.discount }}</span>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div
+      class="flex justify-between items-end mt-auto pt-3 border-t border-gray-200"
+    >
+      <!-- Wishlist Button -->
+      <button
+        mat-mini-fab
+        color="warn"
+        (click)="addWishList(product, $event)"
+        [ngClass]="{
+          'bg-red-500 hover:bg-red-600': isExists(product._id!),
+          'bg-gray-300 hover:bg-gray-400': !isExists(product._id!)
+        }"
+        class="transition duration-200"
+      >
+        <mat-icon class="text-white">
+          {{ isExists(product._id!) ? "favorite" : "favorite_border" }}
+        </mat-icon>
+      </button>
+
+      <!-- Cart Button -->
+      <button
+        mat-mini-fab
+        color="primary"
+        (click)="addToCart(product); $event.stopPropagation()"
+        class="bg-blue-500 hover:bg-blue-600 text-white transition duration-200"
+      >
+        <mat-icon *ngIf="!isCartExist(product._id); else elseBlock">
+          shopping_cart
+        </mat-icon>
+        <ng-template #elseBlock>
+          <mat-icon>remove_shopping_cart</mat-icon>
+        </ng-template>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

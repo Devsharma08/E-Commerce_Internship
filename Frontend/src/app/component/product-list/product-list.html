@@ -1,0 +1,88 @@
+<div class="flex flex-col md:flex-row gap-6 p-4">
+
+  <!-- Sidebar (Filters) -->
+  <div class="w-full md:w-3/12">
+    <h1 class="my-5 font-mono text-xl font-bold">Filters</h1>
+    <div class="flex flex-col gap-4">
+      <!-- Brand Filter -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Select Brand</mat-label>
+        <mat-select
+          name="brand"
+          [(ngModel)]="brandId"
+          (ngModelChange)="handleBrandChange($event)"
+        >
+          <mat-option [value]="''">All Brands</mat-option>
+          <mat-option *ngFor="let brand of brandNameList" [value]="brand._id">
+            {{ brand.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- Main Content (Product list and Sorts) -->
+  <div class="w-full md:w-9/12 flex flex-wrap flex-col gap-6">
+    <!-- Sorting -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-end">
+      <mat-form-field appearance="fill" class="w-full sm:w-64">
+        <mat-label>Sorting Property</mat-label>
+        <mat-select
+          [(ngModel)]="sortBy"
+          (ngModelChange)="handleSortByChange($event)"
+        >
+          <mat-option [value]="'price'">Price</mat-option>
+          <mat-option [value]="'name'">Alphabetical</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full sm:w-64">
+        <mat-label>Sorting Order</mat-label>
+        <mat-select
+          [(ngModel)]="sortOrder"
+          (ngModelChange)="handleSortOrderChange($event)"
+        >
+          <mat-option [value]="'asc'">Ascending</mat-option>
+          <mat-option [value]="'desc'">Descending</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Product List -->
+    <div>
+      <h1 class="mb-5 font-mono text-xl font-bold">Products</h1>
+
+      <div
+        *ngIf="productList.length > 0; else noProducts"
+        class="flex flex-wrap gap-4"
+      >
+        <app-card
+          *ngFor="let product of productList"
+          [product]="product"
+        ></app-card>
+      </div>
+
+      <ng-template #noProducts>
+        <div class="w-full text-center text-gray-500 py-8">
+          No products found.
+        </div>
+      </ng-template>
+    </div>
+  
+
+  <div *ngIf="!!productList" class="flex w-full justify-around mt-10">
+    <!-- Left Arrow Button -->
+    <button mat-icon-button title="Prev. Page" (click)="handlePrevPageChange()" [disabled]="page==1">
+      
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  
+    <!-- Right Arrow Button -->
+    <button mat-icon-button title="Next Page" [disabled]="!isNext" (click)="handleNextPageChange()">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+  </div>
+
+</div>
+
+

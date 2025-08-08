@@ -1,0 +1,95 @@
+<div class="flex flex-col items-center px-40 mt-10">
+  @if (isEdit) {
+  <h1 class="text-3xl font-bold">Update Product</h1>
+  } @else {
+    <h1 class="text-3xl font-bold">Add New Product</h1>
+  }
+  <form class="shadow p-4" [formGroup]="productForm">
+    <div class="flex flex-wrap">
+      <mat-form-field class="w-full">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Short Description</mat-label>
+        <input type="text" matInput formControlName="shortDescription" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Description</mat-label>
+        <input type="text" matInput formControlName="description" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Price</mat-label>
+        <input type="number" matInput formControlName="price" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Discount</mat-label>
+        <input type="number" matInput formControlName="discount" />
+      </mat-form-field>
+
+      <!-- featured and new -->
+      <div class="flex gap-x-30 my-3">
+        <mat-checkbox  formControlName="isFeaturedProduct">Is Featured</mat-checkbox>
+        <mat-checkbox formControlName="isNewProduct">Is New</mat-checkbox>
+      </div>
+
+      <!-- Select brand -->
+<mat-form-field class="w-full">
+  <mat-label>Brand</mat-label>
+  <mat-select formControlName="brandId">
+    <mat-option *ngFor="let item of brandList; let i = index" [value]="item._id">
+      {{ item.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+    
+<!-- Select category -->
+<mat-form-field class="w-full">
+  <mat-label>Category</mat-label>
+  <mat-select formControlName="categoryId">
+    <mat-option *ngFor="let item of categoryList; let i = index" [value]="item._id">
+      {{ item.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+
+
+
+      <div class="w-full flex flex-col" formArrayName="images">
+        <div class="flex justify-between items-center mb-2">
+          <h4 class="text-xl font-bold" >Images</h4>
+          <div class="flex space-x-5">
+            <button (click)="addImage()" mat-stroked-button>Add Image</button>
+            <button (click)="removeImage()" mat-stroked-button>Remove Image</button>
+          </div>
+        </div>
+        @for (item of images.controls; track $index) {
+        <mat-form-field class="w-full">
+          <mat-label>images {{$index+1}}</mat-label>
+          <input type="text" matInput [formControlName]="$index" />
+        </mat-form-field>
+        }
+      </div>
+      </div>
+      @if (isEdit) {
+        <div class="flex justify-center items-center">
+        <button mat-flat-button color="primary" [disabled]="productForm.invalid" (click)="updateProduct()">
+          Update Product
+        </button>
+      </div> 
+      } @else {
+        <div class="flex justify-center items-center">
+        <button mat-flat-button color="primary" [disabled]="productForm.invalid" (click)="addToProduct()">
+          Add Product
+        </button>
+      </div>
+      }
+      
+  </form>
+</div>

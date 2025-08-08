@@ -1,0 +1,88 @@
+<div class=" w-full shadow-sm bg-white px-6 py-3 flex flex-col">
+
+  <header class="w-full bg-white px-6 py-3 flex items-center justify-between">
+  <!-- Logo -->
+  <div class="flex items-center space-x-2 text-blue-600 text-xl font-bold">
+    <mat-icon>shopping_cart</mat-icon>
+    <a [routerLink]="['/']" class="hover:text-blue-700">ShopEase</a>
+  </div>
+
+
+  <!-- Search Bar -->
+  <div class="flex-1 mx-6 hidden sm:flex max-w-xl relative">
+    <input
+      type="text"
+      (keyup.enter)='handleSearch($event)'
+      [value]="searchVal"
+      [(ngModel)] = "searchVal"
+      placeholder="Search for products, brands and more"
+      class="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <button 
+    class="absolute right-2 pt-1 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-blue-600"
+    (click)="handleSearch($event)">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+
+  @if(!isAdmin()){
+  <div class="flex gap-x-4 justify-equal items-center">
+    <!-- favorite icon -->
+    <button mat-icon-button [routerLink]="['/wishlist']" class="flex justify-center">
+      <mat-icon class="text-red-500 text-md">favorite</mat-icon>
+    </button>
+
+    <button mat-icon-button [routerLink]="'/order'" aria-label="My Orders">
+  <mat-icon>shopping_bag</mat-icon>
+</button>
+    <!-- cart icon -->
+    <button [routerLink]="['/cart']" mat-icon-button>
+        <mat-icon  >shopping_cart</mat-icon>
+        <!-- <mat-icon class="text-sm">remove_shopping_cart</mat-icon> -->
+      </button>
+  </div>
+}
+  <!-- Profile -->
+  <div class="flex items-center space-x-4">
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon class="text-gray-600 hover:text-blue-600">account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      @if(authService.isLoggedIn()){
+        <button mat-menu-item routerLink="/user/profile">
+          <mat-icon>{{"name"}}</mat-icon>
+          <span>My Profile</span>
+        </button>
+         @if(authService.isAdmin()){
+        <button mat-menu-item routerLink="/admin/dashboard">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </button>}
+        <button mat-menu-item (click)="handleLogout()">
+          <mat-icon>logout</mat-icon>
+          <span >Logout</span>
+        </button>
+      } @else {
+        <button mat-menu-item [routerLink]="['/login']">
+          <mat-icon>log In</mat-icon>
+          <span >Log In</span>
+        </button>
+      }
+    </mat-menu>
+  </div>
+</header>
+
+    <!-- Navigation Links -->
+  <nav class="hidden md:flex space-x-6 text-sm text-gray-700 flex justify-start pl-7">
+    @for(heading of categoriesList;track $index){
+    <div >
+      <a [routerLink]="['/product']" queryParamsHandling="merge" [queryParams]="{ categoryId: heading._id }" class="hover:text-blue-600">
+  {{ heading.name }}
+</a>
+</div>}
+  
+  </nav>
+</div>
+

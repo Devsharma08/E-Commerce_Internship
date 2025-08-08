@@ -1,0 +1,24 @@
+<div class="relative group">
+  <!-- Viewport -->
+  <div class="overflow-hidden rounded-xl" #viewport>
+    <div class="flex transition-transform duration-300 ease-out">
+      <div *ngFor="let item of items" class="flex-[0_0_100%] px-2">
+        <ng-container *ngTemplateOutlet="templateRef; context: { $implicit: item }"></ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <button
+    class="absolute text-2xl top-2/5 ml-1 p-2 left-2 text-white -translate-y-1/2 z-10 bg-black/40 backdrop-blur-md p-2 rounded-full shadow hover:text-black hover:bg-white"
+    (click)="embla?.scrollPrev()"
+  >
+    ‹
+  </button>
+  <button
+    class="absolute top-2/5 p-2 mr-1 text-2xl text-white right-2 hover:text-black -translate-y-1/2 z-10 bg-black/40 backdrop-blur-md p-2 rounded-full shadow hover:bg-white"
+    (click)="embla?.scrollNext()"
+  >
+    ›
+  </button>
+</div>

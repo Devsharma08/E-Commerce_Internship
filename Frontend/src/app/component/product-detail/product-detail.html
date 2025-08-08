@@ -1,0 +1,104 @@
+<div class="p-5 max-w-6xl flex mx-auto">
+  <!-- product card -->
+
+  @if(productList){
+  <div class="flex w-full flex-wrap gap-8">
+    <!-- Product Image -->
+    <!-- <div class="flex flex-col"></div> -->
+    <!-- <h1>{{ productList.name }}</h1> -->
+    @if(productImagesList.length>1){
+    <div
+      class="flex flex-col mt-12 gap-4"
+      (click)="handleImageClick($event)"
+    >
+    @for(subImg of productImagesList;track $index){
+      <img
+        [src]="subImg"
+        [alt]="productList.name"
+        class="h-[80px] w-[50px] hover:scale-101 transition-transform duration-300 rounded-sm object-cover"
+      />}
+    </div>
+  }
+
+    <div class="w-full flex flex-col justify-center items-center md:w-1/2">
+      <h1 class="text-2xl font-bold mb-2">{{ productList.name }}</h1>
+      <img
+        [src]="currentImage"
+        alt="{{ productList?.name }}"
+        class="w-full h-full rounded-lg shadow-lg p-2 hover:scale-101 transition-transform duration-300"
+      />
+    </div>
+  </div>}
+  <!-- Product Details -->
+  <div class="w-full md:w-1/2 flex flex-col gap-4">
+    <h1 class="text-3xl font-bold">{{ productList?.name }}</h1>
+    <p class="text-lg text-gray-600">{{ productList?.description }}</p>
+    <div class="text-2xl font-semibold text-green-600">
+      ₹{{ productList.price }}
+    </div>
+
+    <!-- wishlist and cart section -->
+
+    <div class="flex mt-20 justify-around items-center">
+      <button
+        mat-icon-button
+        (click)="addWishList(productList, $event)"
+        [ngClass]="{
+          'text-red-600': isExists(productId),
+          'text-gray-500': !isExists(productId)
+        }"
+        class="transition duration-200 hover:scale-110"
+      >
+        <mat-icon class="text-xl">
+          {{ isExists(productId) ? "favorite" : "favorite_border" }}
+        </mat-icon>
+      </button>
+
+      <!-- <button mat-mini-Fab class="text-sm" >
+        <mat-icon>shopping_cart</mat-icon>
+        <mat-icon class="text-sm">remove_shopping_cart</mat-icon>
+      </button> -->
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="toggleCart(productList)"
+      >
+        <mat-icon>{{
+          isInCart(productList._id) ? "remove_shopping_cart" : "shopping_cart"
+        }}</mat-icon>
+        {{ isInCart(productList._id) ? "Remove from Cart" : "Add to Cart" }}
+      </button>
+    </div>
+  </div>
+
+  <!-- similar products -->
+</div>
+@if(similarProducts.length>1){
+<div class="my-10">
+  <h2 class="text-2xl font-semibold ml-10 mb-4">Similar Products</h2>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 ml-5 md:grid-cols-3 lg:grid-cols-4 gap-10"
+  >
+    <app-card *ngFor="let product of similarProducts" [product]="product">
+    </app-card>
+  </div>
+</div>
+}
+<!-- Reviews -->
+<div class="mt-10">
+  <h2 class="text-2xl font-semibold mb-4">Customer Reviews</h2>
+  @if(reviews.length){ 
+  <div class="space-y-4">
+    <div *ngFor="let review of reviews" class="p-4 border rounded-lg">
+      <div class="font-semibold">{{ review.user }}</div>
+      <div class="text-sm text-gray-500">{{ review.date | date }}</div>
+      <p class="mt-2">{{ review.comment }}</p>
+    </div>
+  </div>}
+  @else{
+  <ng-template>
+    <p class="text-gray-500">No reviews yet.</p>
+  </ng-template>
+  }
+</div>

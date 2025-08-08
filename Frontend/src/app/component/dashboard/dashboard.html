@@ -1,0 +1,70 @@
+  <!-- orders data -->
+ <div class="p-6">
+  <h2 class="text-2xl font-semibold mb-4">Admin Dashboard</h2>
+
+  <nav class="mb-6 space-x-4">
+    <a mat-raised-button color="accent" [routerLink]="['/admin/product']">Manage Products</a>
+    <a mat-raised-button color="accent" [routerLink]="['/admin/brand']">Manage Brands</a>
+    <a mat-raised-button color="accent" [routerLink]="['/admin/categories']">Manage Categories</a>
+  </nav>
+  <div class="p-6">
+    <h2 class="text-2xl font-bold mb-6">All Customer Orders</h2>
+
+    @if (orders?.length > 0) {
+      @for (order of paginatedOrders; track order._id) {
+        <div class="border border-gray-300 p-5 rounded-lg shadow mb-6">
+          <div class="mb-2 text-lg">
+            <strong>User:</strong> {{ 'Unknown User' }}
+          </div>
+
+          <div class="mb-2">
+            <strong>Address:</strong> {{ order.address }}
+          </div>
+
+          <div class="mb-2">
+            <strong>Items:</strong>
+            <ul class="list-disc list-inside">
+              @for (item of order.items; track item.productId._id) {
+                <li>
+                  {{ item.productId?.name ?? 'Unknown Product' }} x {{ item.quantity }}
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div class="mb-2">
+            <strong>Status:</strong>
+            <select
+              class="border rounded px-2 py-1"
+              [ngModel]="order.status"
+              (ngModelChange)="updateStatus(order._id, $event)"
+            >
+              <option value="Pending">Pending</option>
+              <option value="Processing">Processing</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="text-sm text-gray-500">
+            Placed on: {{ order.date | date: 'medium' }}
+          </div>
+        </div>
+      }
+    } @else {
+      <p class="text-gray-600 text-center mt-10">No orders found.</p>
+    }
+  </div>
+
+  <!-- ✅ FIXED: Removed duplicate `length` attribute -->
+  <mat-paginator
+    [length]="orders?.length || 0"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>
+

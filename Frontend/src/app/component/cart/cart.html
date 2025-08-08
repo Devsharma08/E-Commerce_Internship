@@ -1,0 +1,114 @@
+<div>
+    @if(paymentStep > 1){
+    <div class="flex justify-end">
+    <button mat-raised-button class="bg-red-500" (click)="getBack()" type="button">Back</button>
+  </div>
+  }
+  @if(paymentStep === 0){
+  <div class="max-w-5xl mx-auto p-4 space-y-6">
+    <h1 class="text-2xl font-semibold">Your Cart</h1>
+
+    @if (cartItems.length === 0) {
+    <div class="text-gray-500">Your cart is empty.</div>
+    } @for ( item of cartItems; track $index) {
+    <div class="flex items-center gap-4 p-4 border-b">
+      <!-- Product Image -->
+      <img
+        [src]="item.productId.images"
+        alt="{{ item.productId.name }}"
+        class="w-24 h-24 object-cover rounded"
+      />
+
+      <!-- Product Info -->
+      <div class="flex-1">
+        <h3 class="text-lg font-semibold">{{ item.productId.name }}</h3>
+        <p class="text-gray-600">Price: ₹{{ item.productId.price }}</p>
+        <div class="flex items-center gap-2 mt-2">
+          <button
+            class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            (click)="decreaseQuantity(item)"
+            [disabled]="item.quantity <= 0"
+          >
+            -
+          </button>
+
+          <span class="px-2">{{ item.quantity }}</span>
+
+          <button
+            class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            (click)="increaseQuantity(item)"
+          >
+            +
+          </button>
+        </div>
+        <p class="text-green-600 mt-2 font-medium">
+          Total: ₹{{ item.quantity * item.productId.price }}
+        </p>
+      </div>
+    </div>
+    } @if (cartItems.length > 0) {
+    <div class="flex justify-between items-center">
+      <div>
+        <button mat-flat-button (click)="ToStepOne()">
+          Proceed to Checkout
+        </button>
+      </div>
+      <div class="text-right text-xl font-bold">
+        Grand Total: ₹{{ getTotal() }}
+      </div>
+    </div>
+    }
+  </div>
+  } @else if(paymentStep === 1){
+  <div class="flex flex-col justify-center gap-5 items-center">
+    <h1 class="text-2xl font-bold my-5">Address form</h1>
+    <form
+      method="post"
+      [formGroup]="checkOutForm"
+      (ngSubmit)="handleShoppingForm()"
+      class="flex justify-center flex-col items-center px-20 mx-20 w-full"
+    >
+      <mat-form-field class="w-[50%]">
+        <mat-label> Enter Address </mat-label>
+        <input type="text" formControlName="address" matInput placeholder="enter address" />
+      </mat-form-field>
+      <mat-form-field class="w-[50%]">
+        <mat-label> Enter City </mat-label>
+        <input type="text" formControlName="city" matInput placeholder="enter city" />
+      </mat-form-field>
+      <mat-form-field class="w-[50%]">
+        <mat-label> Enter PinCode. </mat-label>
+        <input type="number" formControlName="pincode" matInput placeholder="enter pincode" />
+      </mat-form-field>
+
+       <button mat-flat-button
+      [disabled]="!checkOutForm.valid" type="submit">Submit</button>
+      <!-- payment method -->
+      <div>     
+      </div>
+    </form>
+  </div>
+  }
+  @else{
+    <form method="post" (ngSubmit)="finalCheckout()"
+    [formGroup]="paymentForm" class="flex justify-center items-center flex-col">
+    <div 
+   
+    class="w-full mt-10 gap-x-10 flex justify-center items-center">
+        <label class="block mb-2 text-lg font-medium text-gray-700"
+          >Select Mode of Payment</label>
+        <mat-radio-group
+        formControlName="paymentMode"
+          class="flex gap-x-4"
+          aria-label="Select Mode of payment"
+        >
+          <mat-radio-button value="offline">offline</mat-radio-button>
+          <mat-radio-button value="online">Online</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <button class="my-10" type="submit" mat-raised-button>Final Checkout</button>
+      </form>
+  }
+
+  
+</div>
