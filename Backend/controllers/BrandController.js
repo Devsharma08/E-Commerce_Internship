@@ -1,4 +1,6 @@
+const brand = require('../model/brand');
 const  Brand = require('../model/brand')
+const mongoose = require('mongoose');
 
 // create cat
 const CreateBrand = async (req, res) => {

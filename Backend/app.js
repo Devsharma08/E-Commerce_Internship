@@ -6,7 +6,6 @@ const Stripe = require('stripe')
 const Product = require('./model/productSchema');
 
 
-
 const connectDB = require('./db/connectDB')
 const categoryRouter = require('./routes/categoryRoute')
 const brandRouter = require('./routes/brandRoutes')
@@ -17,6 +16,7 @@ const WishListRouter = require('./routes/wishListRoute');
 const CartRouter = require('./routes/CartRoutes');
 const orderRouter = require('./routes/orderRoutes');
 const adminOrderRouter = require('./routes/AdminOrder');
+const commentRouter = require('./routes/commentRoutes');
 const {isAdmin,authentication} = require('./middleware/authentication')
 
 
@@ -39,6 +39,7 @@ app.use('/api/wishlist',WishListRouter)
 app.use('/api/cart',CartRouter);
 app.use('/api/admin/order',adminOrderRouter);
 app.use('/api/order',orderRouter);
+app.use('/api/comment',commentRouter);
 
 
 app.get('/',(req,res)=>{

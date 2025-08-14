@@ -1,4 +1,6 @@
 const Order = require('../model/orderSchema');
+const mongoose  = require('mongoose')
+const Brand = require('../model/brand')
 
 const AddOrder = async (req, res) => {
   try {
@@ -82,5 +84,20 @@ const deleteOrder = async (req, res) => {
   }
 };
 
+const getBrandByCategory = async(req,res) =>{
+  try {
+   const {id} = req.params;
+   if(!mongoose.isValidObjectId(id)){
+    return res.status(200).json({error:"Category Id is not valid"})
+   } 
+   const brandList = await Brand.find({categoryId:id});
+   if(!brandList)
+    return res.status(404).json({msg:"No Brand found, try with another id"});
+   return res.status(200).json(brandList);
+  } catch (error) {
+   return res.status(500).json({error:error.message});
+  }
+}
 
-module.exports = {deleteOrder,getCustomerOrder,AddOrder}
+
+module.exports = {deleteOrder,getCustomerOrder,AddOrder,getBrandByCategory}
