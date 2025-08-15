@@ -30,27 +30,7 @@ const createWishList = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
-};
-
-
-// const updateWishList = async(req,res) =>{
-//   try {
-
-//   const {userId,productId} = req.body;
-
-//   if(!userId || !productId){
-//     return res.status(401).json({msg:"enter the userId and productId"});
-//   }
-
-//   const wishListData = await WishList.find(userId);
-//   if(!wishListData){
-//     wishListData = await WishList.create(req.body);
-//     return res.status(200).json(wishListData);
-//   }
-//   } catch (error) {
-//     res.status(500).json({msg:error.message});
-//   }
-// }
+}
 
 
 const deleteWishList = async(req,res) =>{
@@ -83,10 +63,6 @@ const getWishList = async (req, res) => {
     }
 
     const wishlist = await WishList.find({ userId }).populate('productId');
-
-    // if (wishlist.length === 0) {
-    //   return res.status(404).json({ msg: "No wishlist items found." });
-    // }
 
     return res.status(200).json(wishlist);
 

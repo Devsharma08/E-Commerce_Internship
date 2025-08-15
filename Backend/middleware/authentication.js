@@ -14,8 +14,7 @@ const authentication = async (req, res, next) => {
     const payload = jwt.verify(token,'abc');
     req.user = payload;
     // console.log("payload is:",payload);
-    
-
+  
     next();
   } catch (error) {
     console.error("Auth error:", error.message);

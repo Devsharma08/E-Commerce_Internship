@@ -19,7 +19,7 @@ const AddToCart = async (req, res) => {
       return res.status(201).json({ msg: 'Product added to cart', cart: newCartItem });
     }
   } catch (error) {
-    console.error("AddToCart Error:", error);
+    // console.error("AddToCart Error:", error);
     return res.status(500).json({ msg: "Server error" });
   }
 };
@@ -44,15 +44,13 @@ const DeleteCart = async (req, res) => {
 const getAllCart = async (req, res) => {
   try {
     const { userId } = req.params;
-
     const allCarts = await Cart.find({ userId }).populate('productId');
-
     if (!allCarts || allCarts.length === 0) {
       return res.status(200).json({ msg: "No products found", items: [] });
     }
-
-    return res.status(200).json( allCarts );
-  } catch (error) {
+    return res.status(200).json( allCarts );}
+    
+    catch (error) {
     console.error("getAllCart Error:", error);
     return res.status(500).json({ msg: "Server error" });
   }
@@ -60,7 +58,7 @@ const getAllCart = async (req, res) => {
 
 const clearCart = async(req,res) =>{
   const {userId} = req.params;
-  const clearedData = await Cart.deleteMany(req.params);
+  const clearedData = await Cart.deleteMany(userId);
   return res.status(200).json({msg:"whole cart cleared"})
 }
 

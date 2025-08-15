@@ -66,9 +66,12 @@ export const routes: Routes = [
   {path:'register',
   component:Signup},
   {path:'wishlist',
-  component:Wishlist},
+  component:Wishlist,
+  canActivate:[AuthGuard]},
   {path:'cart',
-  component:Cart},
+  component:Cart,
+  canActivate:[AuthGuard]},
   {path:'order',
-  component:Order}
+  component:Order,
+  canActivate:[AuthGuard]}
   ];

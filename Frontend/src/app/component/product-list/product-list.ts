@@ -118,11 +118,8 @@ handleBrandChange(e: string) {
     },
     queryParamsHandling: 'merge',
   });
-  setTimeout(()=>{
     this.getSearchProductList();
     this.cdRef.detectChanges();
-  },300)
-    
 }
 
 

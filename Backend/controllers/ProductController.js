@@ -43,7 +43,7 @@ const UpdateProduct = async (req, res) => {
   }
 };
 
-// del cat
+// del pro
 const deleteProduct = async(req,res)=>{
   const { id } = req.params;
   try{

@@ -31,7 +31,7 @@ app.use(cors({
 app.use(express.json())
 
 app.use('/api/categories',authentication,isAdmin,categoryRouter);
-app.use('/api/brand',authentication,isAdmin,brandRouter);
+app.use('/api/brand',authentication,brandRouter);
 app.use('/api/product',authentication,productRouter);
 app.use('/api/customer',customerRouter);
 app.use('/api/auth',AuthRouter);
