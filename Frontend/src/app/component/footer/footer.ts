@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Auth } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-footer',
@@ -7,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './footer.scss'
 })
 export class Footer {
+
+  isLoggedIn:boolean = false;
+  authService = inject(Auth)
+  cdRef = inject(ChangeDetectorRef)
+
+  ngOnInit(){
+    this.isLoggedIn = this.authService.isLoggedIn();
+    this.cdRef.detectChanges();
+  }
 
 }

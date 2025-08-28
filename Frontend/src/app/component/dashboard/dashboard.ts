@@ -54,7 +54,7 @@ export class Dashboard {
   }
   getAllOrders() {
     this.authService.getAllOrders().subscribe((res) => {
-      console.log("All orders: ", res);
+      // console.log("All orders: ", res);
       this.orders = res;
       this.updatePaginatedOrders(); 
       this.cdRef.detectChanges();
@@ -80,7 +80,7 @@ export class Dashboard {
 
   updateStatus(orderId: any, event: any) {
     this.authService.updateUserStataus(orderId, event).subscribe((res:any) => {
-      console.log('Order status updated:', res);
+      // console.log('Order status updated:', res);
       this.cdRef.detectChanges();
     });
   }

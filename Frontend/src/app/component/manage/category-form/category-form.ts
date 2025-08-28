@@ -24,7 +24,7 @@ export class CategoryForm {
 
   ngOnInit(){
     this.id = this.route.snapshot.params['id'];
-    console.log("Id is :",this.id);
+    // console.log("Id is :",this.id);
 
     if(this.id){
       this.isEdit = true;
@@ -46,7 +46,7 @@ export class CategoryForm {
 
   addToCategory(){
     this.CategoriesService.addCategory(this.name).subscribe((res:categoryType)=>{
-      console.log('added sussesful',this.name);
+      // console.log('added sussesful',this.name);
       alert(`${this.name} added successfully`)
       this.router.navigateByUrl('/admin/categories')
       this.name = '';

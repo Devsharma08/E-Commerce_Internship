@@ -1,5 +1,47 @@
 const Product = require('../model/productSchema')
 const Category = require('../model/categorySchema')
+const main  = require('./AIDescriptor')
+
+const generateDescription = async(req,res) =>{
+  const {name,productId} = req.body;
+  if(!name || !productId){
+    return res.status(400).json({
+      success:false,
+      message:'no name and productId provided',
+      data:null
+    })
+  } 
+  try {
+  const descriptionText = await main(name);
+
+  //if no description 
+  if(!descriptionText){
+    return res.status(404).json({
+      error:'description not found , some error has occured'
+    })
+  } else {
+    const product = await Product.findOne({_id:productId});
+    if(!product){
+      return res.status(400).json({
+        success:false,
+        data:null,
+        message:`no such product found`
+      })
+    }
+    product.description = descriptionText;
+    await product.save();
+    return res.status(201).json({
+      success:true,
+      message:`description created successfully`,
+      data: product.description
+    })
+  }
+  } catch (error) {
+    return res.status(500).json({
+      error:error.message
+    })
+  }
+}
 
 // create cat
 const CreateProduct = async (req, res) => {
@@ -179,4 +221,4 @@ const getListedProduct = async (req, res) => {
 };
 
 
-module.exports = { CreateProduct,UpdateProduct, deleteProduct,getAllProduct,getSingleProduct,getFeaturedProducts,getNewProducts,getCategoryName,getListedProduct,getSameCategoryProduct };
+module.exports = { CreateProduct,UpdateProduct, deleteProduct,getAllProduct,getSingleProduct,getFeaturedProducts,getNewProducts,getCategoryName,getListedProduct,getSameCategoryProduct,generateDescription };

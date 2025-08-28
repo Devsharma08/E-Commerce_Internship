@@ -43,7 +43,7 @@ export class Brand {
 
   getAllCategories(){
     this.BrandService.getAllbrand().subscribe((result:any)=>{
-      console.log(result);
+      // console.log(result);
       
       this.dataSource.data = result.allBrandList
     })

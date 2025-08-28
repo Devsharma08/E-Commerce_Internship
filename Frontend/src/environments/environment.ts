@@ -5,4 +5,4 @@ export const environment = {
   apiBaseUrl: 'https://api.myapp.com'
 };
 
-console.log('production url');
+// console.log('production url');

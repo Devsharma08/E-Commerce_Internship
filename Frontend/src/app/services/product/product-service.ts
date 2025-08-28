@@ -19,6 +19,9 @@ export class ProductService {
     return this.http.get<ProductUserData[]>(`${this.apiBaseUrl}/product/`);
   }
   
+  generateAiDesc({productId,productName}:any){
+    return this.http.post(`http://localhost:5000/api/product/generateAI-Description`,{productId:productId,name:productName})
+  }
   deleteProduct(id:String){
     return this.http.delete(`${this.apiBaseUrl}/product/${id}`)
   }

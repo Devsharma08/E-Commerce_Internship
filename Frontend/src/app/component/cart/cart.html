@@ -1,4 +1,12 @@
 <div>
+
+    @if (cartItems.length === 0) {
+    <div class="flex justify-center items-center w-screen h-screen">
+      <div class="text-gray-500">Your cart is empty.</div>
+    </div>
+    } 
+    @else{
+
     @if(paymentStep > 1){
     <div class="flex justify-end">
     <button mat-raised-button class="bg-red-500" (click)="getBack()" type="button">Back</button>
@@ -8,9 +16,7 @@
   <div class="max-w-5xl mx-auto p-4 space-y-6">
     <h1 class="text-2xl font-semibold">Your Cart</h1>
 
-    @if (cartItems.length === 0) {
-    <div class="text-gray-500">Your cart is empty.</div>
-    } @for ( item of cartItems; track $index) {
+    @for ( item of cartItems; track $index) {
     <div class="flex items-center gap-4 p-4 border-b">
       <!-- Product Image -->
       <img
@@ -108,7 +114,5 @@
       </div>
       <button class="my-10" type="submit" mat-raised-button>Final Checkout</button>
       </form>
-  }
-
-  
+  }}
 </div>

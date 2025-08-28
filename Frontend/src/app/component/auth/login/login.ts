@@ -28,9 +28,9 @@ export class Login {
   onSubmit() {
     if (this.loginForm.valid) {
       // this.loginForm;
-      console.log('User Registered:', this.loginForm.value);
+      // console.log('User Registered:', this.loginForm.value);
       this.authService.userLogin(this.loginForm.value).subscribe((res:any)=>{
-        console.log(res);
+        // console.log(res);
         localStorage.setItem('userData',JSON.stringify(res.user));
         localStorage.setItem('token',res.token);
 

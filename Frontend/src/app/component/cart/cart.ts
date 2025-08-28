@@ -69,12 +69,12 @@ export class Cart{
 
   handleShoppingForm(){
     this.paymentStep = 2;
-    console.log("form data:",this.checkOutForm.value);    
+    // console.log("form data:",this.checkOutForm.value);    
   }
 
 
  handlePaymentType(){
-  console.log("payment mode:",this.paymentForm.value);
+  // console.log("payment mode:",this.paymentForm.value);
   }
   
 
@@ -125,7 +125,7 @@ export class Cart{
   }
 
   async finalCheckout() {
-  console.log("click final checkout");
+  // console.log("click final checkout");
 
   const order = {
     items: this.cartItems.map((item: any) => ({
@@ -169,14 +169,14 @@ export class Cart{
     // Offline payment - place order directly
     this.orderService.createlOrders(order).subscribe((res: any) => {
       this.cartService.clearCart(res.userId).subscribe(() => {
-        console.log("cart cleared successfully");
+        // console.log("cart cleared successfully");
         this.cartService.loadCartOnStart();
         this.paymentStep = 0;
         alert(`Your order has been placed successfully!`);
         this.router.navigateByUrl('/cart');
         this.cdRef.detectChanges();
       });
-      console.log("order pushed", res);
+      // console.log("order pushed", res);
     });
   }
 }

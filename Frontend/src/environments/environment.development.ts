@@ -5,4 +5,4 @@ export const environment = {
 };
 
 
-console.log('development url');
+// console.log('development url');

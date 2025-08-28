@@ -33,7 +33,7 @@ export class Product {
 
   getAllProduct(){
     this.ProductService.getAllProduct().subscribe((result:any)=>{
-      console.log(result);
+      // console.log(result);
       
       this.dataSource.data = result.allProductList
     })

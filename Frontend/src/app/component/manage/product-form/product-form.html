@@ -16,10 +16,21 @@
         <input type="text" matInput formControlName="shortDescription" />
       </mat-form-field>
 
-      <mat-form-field class="w-full">
-        <mat-label>Description</mat-label>
-        <input type="text" matInput formControlName="description" />
-      </mat-form-field>
+<div class="flex items-center justify-between w-full gap-4">
+  <!-- Description Input -->
+  <mat-form-field appearance="fill" class="flex-1">
+    <mat-label>Description</mat-label>
+    <input matInput formControlName="description" placeholder="Enter or generate description" />
+  </mat-form-field>
+
+<button mat-raised-button color="primary" (click)="handleAiDesc()" 
+        [disabled]="!productForm.get('name')?.value || isGenerating">
+  <mat-icon *ngIf="!isGenerating" class="mr-2 flex w-full justify-center">auto_fix_high</mat-icon>
+  <mat-progress-spinner *ngIf="isGenerating" diameter="20" mode="indeterminate"></mat-progress-spinner>
+</button>
+
+</div>
+
 
       <mat-form-field class="w-full">
         <mat-label>Price</mat-label>

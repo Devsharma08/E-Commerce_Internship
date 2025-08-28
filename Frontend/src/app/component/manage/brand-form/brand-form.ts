@@ -24,7 +24,7 @@ export class BrandForm {
 
   ngOnInit(){
     this.id = this.route.snapshot.params['id'];
-    console.log("Id is :",this.id);
+    // console.log("Id is :",this.id);
 
     if(this.id){
       this.isEdit = true;
@@ -45,10 +45,10 @@ export class BrandForm {
 
 
   addToBrand(){
-    console.log('added is ruuned');
+    // console.log('added is ruuned');
     
     this.BrandService.addBrand(this.name).subscribe((res:any)=>{
-      console.log('added sussesful',this.name);
+      // console.log('added sussesful',this.name);
       alert(`${this.name} added successfully`)
       this.router.navigateByUrl('/admin/brand')
       this.name = '';

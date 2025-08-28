@@ -38,7 +38,7 @@ export class Signup {
   onSubmit() {
     if (this.registerForm.valid) {
       this.registerForm;
-      console.log('User Registered:', this.registerForm);
+      // console.log('User Registered:', this.registerForm);
       this.authService.userRegister(this.registerForm.value).subscribe((res:any)=>{
         alert('user registered ')
         this.router.navigateByUrl('/login')

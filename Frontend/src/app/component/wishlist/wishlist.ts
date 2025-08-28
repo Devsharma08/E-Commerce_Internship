@@ -49,9 +49,9 @@ export class Wishlist {
   getAllWishListIten(){
     this.wishlistService.getAllWishList(this.currentUserID).subscribe((res: any) => {
         // this.wishlistItems = res.map((item: any) => item.productId);
-        console.log("Wishlist data",res);
+        // console.log("Wishlist data",res);
         this.wishlistItems = res
-        console.log("in wishlist page, all items",this.wishlistItems);
+        // console.log("in wishlist page, all items",this.wishlistItems);
         
         this.itemsCount = res.length;
         this.cdRef.detectChanges()

@@ -28,12 +28,8 @@ export class Header {
   searchVal!:string;
   userNameIs!:string;
   router = inject(Router)
-  user = {
-    name: 'John Doe',
-    email: 'john@example.com',
-    phone: '+91 9876543210',
-    address: '221B Baker Street, London'
-  };
+
+  isLoggedIn:boolean = false
 
   cdRef = inject(ChangeDetectorRef);
   ngOnInit(){
@@ -44,7 +40,7 @@ export class Header {
       //   // console.log(item.name)        
       // })      
         // console.log(res);
-        
+        this.isLoggedIn = this.authService.isLoggedIn()
         this.categoriesList = res.categoryNameList;
         this.cdRef.detectChanges()
         // console.log("cat list:",this.categoriesList);
@@ -68,6 +64,7 @@ export class Header {
   handleLogout(){
     this.authService.logout();
     this.router.navigateByUrl('/login');
+    this.isLoggedIn = false;
   }
 
   handleSearch(e:any){

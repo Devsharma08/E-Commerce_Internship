@@ -48,7 +48,7 @@ export class Order{
   
   getAllOrders(){
     this.orderService.gertllOrders(this.userId).subscribe((res:any)=>{
-      console.log("all booked orders:",res);
+      // console.log("all booked orders:",res);
       this.userOrders = res.customerOrder;
     this.cdRef.detectChanges();
 

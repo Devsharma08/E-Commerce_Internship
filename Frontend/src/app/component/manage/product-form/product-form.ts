@@ -11,11 +11,14 @@ import { categoryType } from '../../../interface/categoryType';
 import { Brand } from '../../../interface/brandType';
 import { CommonModule } from '@angular/common';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @Component({
   selector: 'app-product-form',
-  imports: [MatInputModule,MatButtonModule,FormsModule,ReactiveFormsModule,MatSelectModule,CommonModule,MatCheckboxModule],
+  imports: [MatInputModule, MatIconModule,
+    MatProgressSpinnerModule,MatButtonModule,FormsModule,ReactiveFormsModule,MatSelectModule,CommonModule,MatCheckboxModule],
   templateUrl: './product-form.html',
   styleUrl: './product-form.scss'
 })
@@ -54,6 +57,24 @@ export class ProductForm {
       this.brandList = res.allBrandList;
     })
   }
+
+isGenerating = false;
+
+handleAiDesc() {
+  const productName = this.productForm.get('name')?.value;
+  if (!productName) return;
+
+  this.isGenerating = true;
+  this.productService.generateAiDesc({ productName, productId: this.id }).subscribe({
+    next: (res:any) => {
+      this.productForm.patchValue({ description: res.data });
+      this.isGenerating = false;
+    },
+    error: () => this.isGenerating = false
+  });
+}
+
+
 
   getAllCategories(){
     this.categoryService.getAllCategories().subscribe((res:any)=>{
@@ -117,7 +138,7 @@ ngOnInit() {
 
   addToProduct(){
     // console.log('added is ruuned');
-    console.log(this.productForm.value);
+    // console.log(this.productForm.value);
     let value = this.productForm.value;
     this.productService.addProduct(value as any).subscribe((res)=>{
       // console.log('added sussesful',this.name);
