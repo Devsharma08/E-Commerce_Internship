@@ -37,7 +37,7 @@ app.use('/api/customer',customerRouter);
 app.use('/api/auth',AuthRouter);
 app.use('/api/wishlist',WishListRouter)
 app.use('/api/cart',CartRouter);
-app.use('/api/admin/order',adminOrderRouter);
+app.use('/api/admin/order',authentication,isAdmin,adminOrderRouter);
 app.use('/api/order',orderRouter);
 app.use('/api/comment',commentRouter);
 
@@ -63,7 +63,7 @@ app.post("/create-checkout-session", async (req, res) => {
     const product = products.find(p => p._id.toString() === item.productId);
     return {
       price_data: {
-        currency: "usd",
+        currency: "inr",
         product_data: { name: product.name },
         unit_amount: product.price * 100
       },
